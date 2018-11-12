@@ -114,6 +114,9 @@ class App extends Component {
       return markers;
     });
   };
+  updateQuery = (query) => {
+    console.log(query)
+  }
   /**
    *
    * @return
