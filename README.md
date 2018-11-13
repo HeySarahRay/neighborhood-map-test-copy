@@ -16,8 +16,6 @@ Once you've completed the above steps, a new browser window should automatically
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). You can find more information on how to perform common tasks [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-### Thank you for checking out my project!# neighborhood-map
-# neighborhood-map
-# neighborhood-map
-# neighborhood-map-test-copy
-# neighborhood-map-test-copy
+### Thank you for checking out my project!
+
+This project would not have been possible if not for the help of some wonderful people: Drunkenkismet, Daphne, Mayguen and Xavier. I thank you all for your dedication towards helping others and teaching as you go.

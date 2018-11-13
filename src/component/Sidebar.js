@@ -1,3 +1,4 @@
+/* List of imports */
 import Drawer from "@material-ui/core/Drawer";
 import React, { Component } from "react";
 /**
@@ -14,6 +15,7 @@ class Sidebar extends Component {
      *
      * @memberof Sidebar
      */
+    /* Refreshes the query */
     updateQuery = newQuery => {
         this.setState({ query: newQuery });
         this.props.filterVenues(newQuery);
@@ -23,6 +25,8 @@ class Sidebar extends Component {
      * @return
      * @memberof Sidebar
      */
+    /* Help on sidebar provided by Drunkenkismet & Daphne */
+    /* Renders the sidebar */
     render() {
         return (
             <Drawer
@@ -55,7 +59,7 @@ class Sidebar extends Component {
                                             onClick={() => this.props.clickListItem(index)}
                                             className="venueList"
                                             key={index}>
-                                            {venue.name}
+                                            {venue.venue.name}
                                         </button>
                                     </li>
                                 );

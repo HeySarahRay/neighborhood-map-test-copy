@@ -1,3 +1,4 @@
+/* List of imports */
 import CssBaseline from "@material-ui/core/CssBaseline";
 import axios from "axios";
 import React, { Component } from "react";
@@ -11,12 +12,14 @@ import Sidebar from "./Sidebar";
 class App extends Component {
   state = {
     venues: [],
-    open: false
+    open: false,
+    filteredVenues: []
   };
   /**
    *
    * @return {void}@memberof App
    */
+  /* Ensuring that the project will display */
   componentDidMount() {
     window.gm_authFailure = () => {
       alert(
@@ -29,6 +32,7 @@ class App extends Component {
    *
    * @memberof App
    */
+  /* Loading Google map */
   renderMap = () => {
     loadScript(
       "https://maps.googleapis.com/maps/api/js?key=AIzaSyC6ZwjgQJzRbSx0ekvOuEaHl0vazf32kkM&callback=initMap"
@@ -39,6 +43,7 @@ class App extends Component {
    *
    * @memberof App
    */
+  /* Foursquare API to assist with locations */
   locales = () => {
     const endPoint = "https://api.foursquare.com/v2/venues/explore?";
     const parameters = {
@@ -48,17 +53,20 @@ class App extends Component {
       near: "Grand Rapids",
       v: "20180323"
     };
-
+/* HTTP client API */
     axios.get(endPoint + new URLSearchParams(parameters)).then(response => {
       this.setState(
         {
-          venues: response.data.response.groups[0].items
+          venues:
+          response.data.response.groups[0].items,
+          filteredVenues:
+          response.data.response.groups[0].items
         },
         this.renderMap()
       );
     });
   };
-
+/* Sidebar function */
   toggleDrawer = () => {
     this.setState({
       open: !this.state.open
@@ -69,6 +77,7 @@ class App extends Component {
    *
    * @memberof App
    */
+  /* Causes map to display specific information about the location of my map, as well as information about the locations within */
   initMap = () => {
     const mapEl = document.getElementById("map");
     mapEl.style.height = "100vh";
@@ -114,14 +123,36 @@ class App extends Component {
       return markers;
     });
   };
+  /**
+   *
+   * @memberof App
+   */
   updateQuery = (query) => {
     console.log(query)
+    console.log(this.state.venues)
+    let matchedVenues = []
+    if (!query){
+      this.setState({
+        filteredVenues: this.state.venues
+      })
+    }
+    this.state.venues.forEach(venue => {
+      if(venue.venue.name.toLowerCase().includes(query.toLowerCase())){
+        matchedVenues.push(venue)
+      }
+    })
+    console.log(matchedVenues)
+    this.setState({
+      filteredVenues: matchedVenues
+    })
   }
   /**
    *
    * @return
    * @memberof App
    */
+/* Render state of the app */
+/*Assistance on Sidebar provided by Daphne*/
   render() {
     return (
       <div className="App" role="application" aria-label="Map Application">
@@ -132,8 +163,9 @@ class App extends Component {
         <div className="header">
           <Sidebar
             {...this.state}
+            venues={this.state.venues}
             onMarkerClick={this.onMarkerClick}
-            filtered={this.state.filtered}
+            filtered={this.state.filteredVenues}
             open={this.state.open}
             toggleDrawer={this.toggleDrawer}
             filterVenues={this.updateQuery}
@@ -150,6 +182,7 @@ class App extends Component {
  * @param  {any} url
  * @return {void}
  */
+/* Loads map function */
 function loadScript(url) {
   let index = window.document.getElementsByTagName("script")[0];
   let script = window.document.createElement("script");
