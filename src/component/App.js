@@ -13,7 +13,8 @@ class App extends Component {
   state = {
     venues: [],
     open: false,
-    filteredVenues: []
+      filteredVenues: [],
+    markers: []
   };
   /**
    *
@@ -79,17 +80,17 @@ class App extends Component {
    */
   /* Causes map to display specific information about the location of my map, as well as information about the locations within */
   initMap = () => {
-    const mapEl = document.getElementById("map");
-    mapEl.style.height = "100vh";
+    const mapGR = document.getElementById("map");
+    mapGR.style.height = "100vh";
 
-    let map = new window.google.maps.Map(mapEl, {
+    let map = new window.google.maps.Map(mapGR, {
       center: new window.google.maps.LatLng(42.972434, -85.676548),
       zoom: 12
     });
 
     let infowindow = new window.google.maps.InfoWindow();
-
-    const markers = this.state.venues.map(myVenue => {
+    let markers=[]
+    this.state.venues.map(myVenue => {
       let contentString = `${myVenue.venue.name +
         ", " +
         myVenue.venue.location.city +
@@ -103,7 +104,8 @@ class App extends Component {
         },
         animation: window.google.maps.Animation.DROP,
         map: map,
-        title: myVenue.venue.name
+          title: myVenue.venue.name,
+          id: myVenue.venue.id
       });
 
       marker.addListener("click", toggleBounce);
@@ -112,17 +114,28 @@ class App extends Component {
         if (marker.getAnimation() !== null) {
           marker.setAnimation(null);
         } else {
-          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+            marker.setAnimation(window.google.maps.Animation.BOUNCE);
+            setTimeout(() => marker.setAnimation(null), 750);
         }
       }
 
       marker.addListener("click", function () {
         infowindow.setContent(contentString);
         infowindow.open(map, marker);
+        });
+        markers.push(marker);
       });
-      return markers;
-    });
+      this.setState({
+          markers
+      })
   };
+  /* Help with finding the markers through the sidebar from Fatemeh */
+    clickListItem = id => {
+        let selectedMarker = this.state.markers.find(marker => marker.id === id);
+        selectedMarker.setAnimation(window.google.maps.Animation.BOUNCE);
+        setTimeout(() => selectedMarker.setAnimation(null), 750);
+        /* TODO: Insert code to make InfoWindow display when venueList item is clicked */
+    }
   /**
    *
    * @memberof App
@@ -153,7 +166,8 @@ class App extends Component {
    */
 /* Render state of the app */
 /*Assistance on Sidebar provided by Daphne*/
-  render() {
+    render() {
+        console.log(this.state.markers)
     return (
       <div className="App" role="application" aria-label="Map Application">
         <button className="hamburger" onClick={() => this.toggleDrawer()}>

@@ -9,7 +9,7 @@ import React, { Component } from "react";
 class Sidebar extends Component {
     state = {
         open: true,
-        query: ""
+        query: "",
     };
     /**
      *
@@ -56,7 +56,7 @@ class Sidebar extends Component {
                                     <li key={index}>
                                         <button
                                             venue={venue}
-                                            onClick={() => this.props.clickListItem(index)}
+                                            onClick={() => this.props.clickListItem(venue.venue.id)}
                                             className="venueList"
                                             key={index}>
                                             {venue.venue.name}

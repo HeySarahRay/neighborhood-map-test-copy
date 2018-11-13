@@ -18,4 +18,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Thank you for checking out my project!
 
-This project would not have been possible if not for the help of some wonderful people: Drunkenkismet, Daphne, Mayguen and Xavier. I thank you all for your dedication towards helping others and teaching as you go.
+This project would not have been possible if not for the help of some wonderful people: Drunkenkismet, Daphne, Fatemeh, Mayguen and Xavier. I thank you all for your dedication towards helping others and teaching as you go.
